@@ -59,3 +59,8 @@ Try it out!
 -----------
 
 You can download the source code or fork the repository to run the MvcSample application included in the solution.
+
+Contribute
+----------
+
+The next step will be to put in place a complete build script (probably based on Ninject's build script using Ant) to build this extension for all MVC versions and for all runtimes supported by Ninject. [Let me know](mailto:manuel.guilbault@gmail.com) if you can give a hand!
