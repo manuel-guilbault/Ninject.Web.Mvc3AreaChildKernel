@@ -1,4 +1,5 @@
-﻿using Ninject.Extensions.ChildKernel;
+﻿using Ninject.Syntax;
+using Ninject.Extensions.ChildKernel;
 using System;
 
 namespace Ninject.Web.MvcAreaChildKernel
@@ -30,7 +31,7 @@ namespace Ninject.Web.MvcAreaChildKernel
 
             if (!isBound)
             {
-                kernel.Bind<IChildKernel>().ToMethod(c => factory(c.Kernel)).Named(areaName);
+                kernel.Bind<IChildKernel>().ToMethod(c => factory(c.Kernel)).InSingletonScope().Named(areaName);
                 isBound = true;
             }
 
