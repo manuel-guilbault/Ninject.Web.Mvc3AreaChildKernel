@@ -11,7 +11,7 @@ namespace MvcSample.Filters
 {
     public class MessageHeaderFilterAttribute : FilterAttribute, IResultFilter
     {
-        [AreaInject]
+        [Inject]
         public IGenericService Service { get; set; }
 
         public void OnResultExecuting(ResultExecutingContext filterContext)

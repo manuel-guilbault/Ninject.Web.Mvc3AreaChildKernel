@@ -14,7 +14,7 @@ namespace MvcSample.Areas.Public
     public class PublicKernel : ChildKernel
     {
         public PublicKernel(IResolutionRoot parent)
-            : base(parent, new NinjectSettings() { InjectAttribute = typeof(AreaInjectAttribute) })
+            : base(parent)
         {
             Bind<IGenericService>().To<PublicService>();
         }

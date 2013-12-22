@@ -1,4 +1,5 @@
 ﻿using MvcSample.Models;
+using Ninject;
 using Ninject.Web.MvcAreaChildKernel;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace MvcSample.ViewPages
 {
     public abstract class MessageViewPage<TModel> : System.Web.Mvc.WebViewPage<TModel>
     {
-        [AreaInject]
+        [Inject]
         public IGenericService Service { get; set; }
     }
 }

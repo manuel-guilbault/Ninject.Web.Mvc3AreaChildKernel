@@ -14,7 +14,7 @@ namespace MvcSample.Areas.Admin
     public class AdminKernel : ChildKernel
     {
         public AdminKernel(IResolutionRoot parent)
-            : base(parent, new NinjectSettings() { InjectAttribute = typeof(AreaInjectAttribute) })
+            : base(parent)
         {
             Bind<IGenericService>().To<AdminService>();
         }

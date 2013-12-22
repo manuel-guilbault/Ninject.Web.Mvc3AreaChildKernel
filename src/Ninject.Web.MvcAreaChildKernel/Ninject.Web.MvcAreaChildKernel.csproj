@@ -62,7 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AreaInjectAttribute.cs" />
     <Compile Include="Mvc\AreaAwareControllerActivator.cs" />
     <Compile Include="Mvc\AreaAwareFilterAttributeFilterProvider.cs" />
     <Compile Include="Mvc\AreaAwareFilterProvider.cs" />

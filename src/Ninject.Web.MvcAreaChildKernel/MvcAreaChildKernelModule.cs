@@ -15,7 +15,7 @@ namespace Ninject.Web.MvcAreaChildKernel
         {
             Bind<IControllerActivator>().To<AreaAwareControllerActivator>();
 
-            //Unbind<IFilterProvider>();
+            Unbind<IFilterProvider>();
             Bind<IFilterProvider>().To<AreaAwareFilterProvider>();
             Bind<IFilterProvider>().To<AreaAwareFilterAttributeFilterProvider>();
 
