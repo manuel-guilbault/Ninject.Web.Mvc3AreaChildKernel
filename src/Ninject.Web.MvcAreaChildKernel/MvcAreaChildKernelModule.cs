@@ -1,10 +1,5 @@
-﻿using Ninject.Web.MvcAreaChildKernel.Mvc;
-using Ninject.Modules;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Ninject.Modules;
+using Ninject.Web.MvcAreaChildKernel.Mvc;
 using System.Web.Mvc;
 
 namespace Ninject.Web.MvcAreaChildKernel

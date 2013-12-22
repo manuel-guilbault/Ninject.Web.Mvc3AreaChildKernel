@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -24,6 +20,8 @@ namespace Ninject.Web.MvcAreaChildKernel.Mvc
 
         public IController Create(RequestContext requestContext, Type controllerType)
         {
+            if (controllerType == null) throw new ArgumentNullException("controllerType");
+
             return (IController)areaChildKernels.ResolveChildKernel(kernel, controllerType).Get(controllerType);
         }
     }

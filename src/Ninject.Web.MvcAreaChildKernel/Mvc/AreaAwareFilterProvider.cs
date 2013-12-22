@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Ninject.Web.MvcAreaChildKernel.Mvc
@@ -24,13 +22,12 @@ namespace Ninject.Web.MvcAreaChildKernel.Mvc
 
         public IEnumerable<Filter> GetFilters(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
         {
+            if (controllerContext == null) throw new ArgumentNullException("controllerContext");
+
             var parameter = new FilterContextParameter(controllerContext, actionDescriptor);
             var effectiveKernel = areaChildKernels.ResolveChildKernel(kernel, controllerContext.Controller.GetType());
             var ninjectFilters = effectiveKernel.GetAll<INinjectFilter>(parameter);
-            foreach (var filter in ninjectFilters)
-            {
-                yield return filter.BuildFilter(parameter);
-            }
+            return ninjectFilters.Select(f => f.BuildFilter(parameter));
         }
     }
 }

@@ -1,16 +1,10 @@
-﻿using Ninject.Web.MvcAreaChildKernel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using System;
 
 namespace Ninject.Web.MvcAreaChildKernel
 {
     public static class AreaChildKernels
     {
-        static IAreaChildKernelCollection collection = new AreaChildKernelCollection();
+        private static IAreaChildKernelCollection collection = new AreaChildKernelCollection();
 
         public static IAreaChildKernelCollection Collection
         {

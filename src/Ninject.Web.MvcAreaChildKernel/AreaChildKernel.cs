@@ -1,32 +1,27 @@
-﻿using Ninject;
-using Ninject.Extensions.ChildKernel;
+﻿using Ninject.Extensions.ChildKernel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ninject.Web.MvcAreaChildKernel
 {
     public class AreaChildKernel
     {
-        private readonly string name;
+        private readonly string areaName;
         private readonly Func<IKernel, IChildKernel> factory;
 
         private bool isBound = false;
 
-        public AreaChildKernel(string name, Func<IKernel, IChildKernel> factory)
+        public AreaChildKernel(string areaName, Func<IKernel, IChildKernel> factory)
         {
-            if (name == null) throw new ArgumentNullException("name");
+            if (areaName == null) throw new ArgumentNullException("areaName");
             if (factory == null) throw new ArgumentNullException("factory");
 
-            this.name = name;
+            this.areaName = areaName;
             this.factory = factory;
         }
 
-        public string Name
+        public string AreaName
         {
-            get { return name; }
+            get { return areaName; }
         }
 
         public IChildKernel GetChildKernel(IKernel kernel)
@@ -35,11 +30,11 @@ namespace Ninject.Web.MvcAreaChildKernel
 
             if (!isBound)
             {
-                kernel.Bind<IChildKernel>().ToMethod(c => factory(c.Kernel)).Named(name);
+                kernel.Bind<IChildKernel>().ToMethod(c => factory(c.Kernel)).Named(areaName);
                 isBound = true;
             }
 
-            return kernel.Get<IChildKernel>(name);
+            return kernel.Get<IChildKernel>(areaName);
         }
     }
 }
