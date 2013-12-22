@@ -6,12 +6,12 @@ Use child kernels with MVC areas.
 How to
 ------
 
-Assuming you already have a MVC project named ```MyMvcApp``` with 
+Assuming you already have a MVC project named MyMvcApp with 
 
-* a reference on the ```Ninject.Web.MvcAreaChildKernel``` extension and its dependencies
-  * ```Ninject.MVC3```
-  * ```Ninject.Extensions.ChildKernel```
-* an area named ```MyArea```
+* a reference on the [Ninject.Web.MvcAreaChildKernel](https://github.com/manuel-guilbault/Ninject.Web.MvcAreaChildKernel) extension and its dependencies
+  * [Ninject.MVC3](https://github.com/ninject/ninject.web.mvc)
+  * [Ninject.Extensions.ChildKernel](https://github.com/ninject/ninject.extensions.childkernel)
+* an area named MyArea
 
 Go ahead and create a child kernel in your area:
 
