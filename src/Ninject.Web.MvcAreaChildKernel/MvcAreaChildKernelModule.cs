@@ -13,6 +13,8 @@ namespace Ninject.Web.MvcAreaChildKernel
     {
         public override void Load()
         {
+            Bind<IAreaChildKernelCollection>().ToMethod(c => AreaChildKernels.Collection).InTransientScope();
+
             Bind<IControllerActivator>().To<AreaAwareControllerActivator>();
 
             Unbind<IFilterProvider>();

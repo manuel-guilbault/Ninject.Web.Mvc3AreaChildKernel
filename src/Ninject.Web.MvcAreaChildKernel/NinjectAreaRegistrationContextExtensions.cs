@@ -16,7 +16,7 @@ namespace System.Web.Mvc
         {
             if (childKernelFactory == null) throw new ArgumentNullException("childKernelFactory");
 
-            AreaChildKernels.Register(
+            AreaChildKernels.Collection.Register(
                 new AreaChildKernel(areaRegistrationContext.AreaName, childKernelFactory), 
                 areaRegistrationContext.Namespaces.Select(ns => ns.TrimEnd('.', '*')).ToArray()
             );

@@ -10,19 +10,27 @@ namespace Ninject.Web.MvcAreaChildKernel.Mvc
 {
     public class AreaAwareFilterAttributeFilterProvider : FilterAttributeFilterProvider
     {
-        readonly IKernel kernel;
+        private readonly IAreaChildKernelCollection areaChildKernels;
+        private readonly IKernel kernel;
 
-        public AreaAwareFilterAttributeFilterProvider(IKernel kernel)
+        public AreaAwareFilterAttributeFilterProvider(IAreaChildKernelCollection areaChildKernels, IKernel kernel)
         {
+            if (areaChildKernels == null) throw new ArgumentNullException("areaChildKernels");
             if (kernel == null) throw new ArgumentNullException("kernel");
 
+            this.areaChildKernels = areaChildKernels;
             this.kernel = kernel;
+        }
+
+        protected IKernel ResolveChildKernel(ControllerContext controllerContext)
+        {
+            return areaChildKernels.ResolveChildKernel(kernel, controllerContext.Controller.GetType());
         }
 
         protected override IEnumerable<FilterAttribute> GetControllerAttributes(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
         {
             var attributes = base.GetControllerAttributes(controllerContext, actionDescriptor);
-            var effectiveKernel = kernel.ResolveChildKernelFor(controllerContext.Controller.GetType());
+            var effectiveKernel = ResolveChildKernel(controllerContext);
             foreach (var attribute in attributes)
             {
                 effectiveKernel.Inject(attribute);
@@ -33,7 +41,7 @@ namespace Ninject.Web.MvcAreaChildKernel.Mvc
         protected override IEnumerable<FilterAttribute> GetActionAttributes(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
         {
             var attributes = base.GetActionAttributes(controllerContext, actionDescriptor);
-            var effectiveKernel = kernel.ResolveChildKernelFor(controllerContext.Controller.GetType());
+            var effectiveKernel = ResolveChildKernel(controllerContext);
             foreach (var attribute in attributes)
             {
                 effectiveKernel.Inject(attribute);

@@ -62,6 +62,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AreaChildKernelCollection.cs" />
+    <Compile Include="IAreaChildKernelCollection.cs" />
     <Compile Include="Mvc\AreaAwareControllerActivator.cs" />
     <Compile Include="Mvc\AreaAwareFilterAttributeFilterProvider.cs" />
     <Compile Include="Mvc\AreaAwareFilterProvider.cs" />

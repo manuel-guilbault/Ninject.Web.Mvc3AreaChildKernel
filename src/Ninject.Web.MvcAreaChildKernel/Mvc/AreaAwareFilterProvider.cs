@@ -10,19 +10,22 @@ namespace Ninject.Web.MvcAreaChildKernel.Mvc
 {
     public class AreaAwareFilterProvider : IFilterProvider
     {
-        readonly IKernel kernel;
+        private readonly IAreaChildKernelCollection areaChildKernels;
+        private readonly IKernel kernel;
 
-        public AreaAwareFilterProvider(IKernel kernel)
+        public AreaAwareFilterProvider(IAreaChildKernelCollection areaChildKernels, IKernel kernel)
         {
+            if (areaChildKernels == null) throw new ArgumentNullException("areaChildKernels");
             if (kernel == null) throw new ArgumentNullException("kernel");
 
+            this.areaChildKernels = areaChildKernels;
             this.kernel = kernel;
         }
 
         public IEnumerable<Filter> GetFilters(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
         {
             var parameter = new FilterContextParameter(controllerContext, actionDescriptor);
-            var effectiveKernel = kernel.ResolveChildKernelFor(controllerContext.Controller.GetType());
+            var effectiveKernel = areaChildKernels.ResolveChildKernel(kernel, controllerContext.Controller.GetType());
             var ninjectFilters = effectiveKernel.GetAll<INinjectFilter>(parameter);
             foreach (var filter in ninjectFilters)
             {

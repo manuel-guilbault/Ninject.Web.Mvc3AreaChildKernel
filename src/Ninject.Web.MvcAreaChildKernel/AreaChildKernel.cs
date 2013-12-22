@@ -10,10 +10,10 @@ namespace Ninject.Web.MvcAreaChildKernel
 {
     public class AreaChildKernel
     {
-        readonly string name;
-        readonly Func<IKernel, IChildKernel> factory;
+        private readonly string name;
+        private readonly Func<IKernel, IChildKernel> factory;
 
-        bool isBound;
+        private bool isBound = false;
 
         public AreaChildKernel(string name, Func<IKernel, IChildKernel> factory)
         {
@@ -31,6 +31,8 @@ namespace Ninject.Web.MvcAreaChildKernel
 
         public IChildKernel GetChildKernel(IKernel kernel)
         {
+            if (kernel == null) throw new ArgumentNullException("kernel");
+
             if (!isBound)
             {
                 kernel.Bind<IChildKernel>().ToMethod(c => factory(c.Kernel)).Named(name);
