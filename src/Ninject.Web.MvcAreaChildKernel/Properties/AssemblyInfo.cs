@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Ninject.Extensions.MvcAreaChildKernel")]
+[assembly: AssemblyTitle("Ninject.Web.MvcAreaChildKernel")]
 [assembly: AssemblyDescription("Use child kernels with MVC areas.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Manuel Guilbault")]
-[assembly: AssemblyProduct("Ninject.Extensions.MvcAreaChildKernel")]
+[assembly: AssemblyProduct("Ninject.Web.MvcAreaChildKernel")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
