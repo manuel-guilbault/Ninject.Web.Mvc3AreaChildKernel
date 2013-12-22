@@ -9,7 +9,7 @@ How to
 Assuming you already have a MVC project named MyMvcApp with 
 
 * a reference on the [Ninject.Web.MvcAreaChildKernel](https://github.com/manuel-guilbault/Ninject.Web.MvcAreaChildKernel) extension and its dependencies
-  * [Ninject.MVC3](https://github.com/ninject/ninject.web.mvc)
+  * [Ninject.Web.Mvc](https://github.com/ninject/ninject.web.mvc)
   * [Ninject.Extensions.ChildKernel](https://github.com/ninject/ninject.extensions.childkernel)
 * an area named MyArea
 
