@@ -1,5 +1,6 @@
 ﻿using Ninject.Modules;
 using Ninject.Web.MvcAreaChildKernel.Mvc;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Ninject.Web.MvcAreaChildKernel
@@ -8,8 +9,16 @@ namespace Ninject.Web.MvcAreaChildKernel
     {
         public override void Load()
         {
-            Bind<IAreaChildKernelCollection>().ToMethod(c => AreaChildKernels.Collection);
+            Bind<IAreaNamespaceMapper>().To<DefaultAreaNamespaceMapper>().InSingletonScope();
+            Bind<IAreaChildKernelRegistrar, IKernelResolver>().To<DefaultAreaChildKernelRegistry>().InSingletonScope();
+            Bind<IAreaNamespaceMapCache>().To<DefaultAreaNamespaceMapCache>()
+                .WithConstructorArgument("cache", c => HttpContext.Current.Cache);
 
+            BindMvcServices();
+        }
+
+        protected virtual void BindMvcServices()
+        {
             Bind<IControllerActivator>().To<AreaAwareControllerActivator>();
 
             Unbind<IFilterProvider>();

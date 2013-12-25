@@ -9,12 +9,8 @@ namespace System.Web.Mvc
     {
         public static void UseKernel(this AreaRegistrationContext areaRegistrationContext, Func<IKernel, IChildKernel> childKernelFactory)
         {
-            if (childKernelFactory == null) throw new ArgumentNullException("childKernelFactory");
-
-            AreaChildKernels.Collection.Register(
-                new AreaChildKernel(areaRegistrationContext.AreaName, childKernelFactory), 
-                areaRegistrationContext.Namespaces.Select(ns => ns.TrimEnd('.', '*')).ToArray()
-            );
+            var areaChildKernelRegistrar = DependencyResolver.Current.GetService<IAreaChildKernelRegistrar>();
+            areaChildKernelRegistrar.Register(areaRegistrationContext, childKernelFactory);
         }
     }
 }

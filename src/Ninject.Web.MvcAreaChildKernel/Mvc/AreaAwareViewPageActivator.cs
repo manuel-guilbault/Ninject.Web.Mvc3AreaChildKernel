@@ -5,16 +5,13 @@ namespace Ninject.Web.MvcAreaChildKernel.Mvc
 {
     public class AreaAwareViewPageActivator : IViewPageActivator
     {
-        private readonly IAreaChildKernelCollection areaChildKernels;
-        private readonly IKernel kernel;
-        
-        public AreaAwareViewPageActivator(IAreaChildKernelCollection areaChildKernels, IKernel kernel)
-        {
-            if (areaChildKernels == null) throw new ArgumentNullException("areaChildKernels");
-            if (kernel == null) throw new ArgumentNullException("kernel");
+        private readonly IKernelResolver kernelResolver;
 
-            this.areaChildKernels = areaChildKernels;
-            this.kernel = kernel;
+        public AreaAwareViewPageActivator(IKernelResolver kernelResolver)
+        {
+            if (kernelResolver == null) throw new ArgumentNullException("kernelResolver");
+
+            this.kernelResolver = kernelResolver;
         }
 
         public object Create(ControllerContext controllerContext, Type type)
@@ -22,8 +19,8 @@ namespace Ninject.Web.MvcAreaChildKernel.Mvc
             if (controllerContext == null) throw new ArgumentNullException("controllerContext");
             if (type == null) throw new ArgumentNullException("type");
 
-            var effectiveKernel = areaChildKernels.ResolveChildKernel(kernel, controllerContext.Controller.GetType());
-            return effectiveKernel.Get(type);
+            var kernel = kernelResolver.Resolve(controllerContext.Controller.GetType());
+            return kernel.Get(type);
         }
     }
 }

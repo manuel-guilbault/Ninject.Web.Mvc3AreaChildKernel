@@ -8,16 +8,13 @@ namespace Ninject.Web.MvcAreaChildKernel.Mvc
 {
     public class AreaAwareFilterProvider : IFilterProvider
     {
-        private readonly IAreaChildKernelCollection areaChildKernels;
-        private readonly IKernel kernel;
+        private readonly IKernelResolver kernelResolver;
 
-        public AreaAwareFilterProvider(IAreaChildKernelCollection areaChildKernels, IKernel kernel)
+        public AreaAwareFilterProvider(IKernelResolver kernelResolver)
         {
-            if (areaChildKernels == null) throw new ArgumentNullException("areaChildKernels");
-            if (kernel == null) throw new ArgumentNullException("kernel");
+            if (kernelResolver == null) throw new ArgumentNullException("kernelResolver");
 
-            this.areaChildKernels = areaChildKernels;
-            this.kernel = kernel;
+            this.kernelResolver = kernelResolver;
         }
 
         public IEnumerable<Filter> GetFilters(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
@@ -25,9 +22,9 @@ namespace Ninject.Web.MvcAreaChildKernel.Mvc
             if (controllerContext == null) throw new ArgumentNullException("controllerContext");
 
             var parameter = new FilterContextParameter(controllerContext, actionDescriptor);
-            var effectiveKernel = areaChildKernels.ResolveChildKernel(kernel, controllerContext.Controller.GetType());
-            var ninjectFilters = effectiveKernel.GetAll<INinjectFilter>(parameter);
-            return ninjectFilters.Select(f => f.BuildFilter(parameter));
+            var kernel = kernelResolver.Resolve(controllerContext.Controller.GetType());
+            var filters = kernel.GetAll<INinjectFilter>(parameter);
+            return filters.Select(f => f.BuildFilter(parameter));
         }
     }
 }

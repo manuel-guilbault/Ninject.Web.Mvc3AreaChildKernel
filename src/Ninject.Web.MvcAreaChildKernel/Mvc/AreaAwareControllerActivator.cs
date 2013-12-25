@@ -6,23 +6,21 @@ namespace Ninject.Web.MvcAreaChildKernel.Mvc
 {
     public class AreaAwareControllerActivator : IControllerActivator
     {
-        private readonly IAreaChildKernelCollection areaChildKernels;
-        private readonly IKernel kernel;
+        private readonly IKernelResolver kernelResolver;
 
-        public AreaAwareControllerActivator(IAreaChildKernelCollection areaChildKernels, IKernel kernel)
+        public AreaAwareControllerActivator(IKernelResolver kernelResolver)
         {
-            if (areaChildKernels == null) throw new ArgumentNullException("areaChildKernels");
-            if (kernel == null) throw new ArgumentNullException("kernel");
+            if (kernelResolver == null) throw new ArgumentNullException("kernelResolver");
 
-            this.areaChildKernels = areaChildKernels;
-            this.kernel = kernel;
+            this.kernelResolver = kernelResolver;
         }
 
         public IController Create(RequestContext requestContext, Type controllerType)
         {
             if (controllerType == null) throw new ArgumentNullException("controllerType");
 
-            return (IController)areaChildKernels.ResolveChildKernel(kernel, controllerType).Get(controllerType);
+            var kernel = kernelResolver.Resolve(controllerType);
+            return (IController)kernel.Get(controllerType);
         }
     }
 }

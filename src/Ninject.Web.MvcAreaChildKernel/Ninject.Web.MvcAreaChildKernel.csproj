@@ -58,15 +58,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AreaChildKernelCollection.cs" />
-    <Compile Include="IAreaChildKernelCollection.cs" />
+    <Compile Include="DefaultAreaChildKernelRegistry.cs" />
+    <Compile Include="DefaultAreaNamespaceMapCache.cs" />
+    <Compile Include="DefaultAreaNamespaceMapper.cs" />
+    <Compile Include="IAreaChildKernelRegistrar.cs" />
+    <Compile Include="IAreaNamespaceMapCache.cs" />
+    <Compile Include="IAreaNamespaceMapper.cs" />
+    <Compile Include="IKernelResolver.cs" />
     <Compile Include="Mvc\AreaAwareControllerActivator.cs" />
     <Compile Include="Mvc\AreaAwareFilterAttributeFilterProvider.cs" />
     <Compile Include="Mvc\AreaAwareFilterProvider.cs" />
     <Compile Include="Mvc\AreaAwareViewPageActivator.cs" />
-    <Compile Include="AreaChildKernel.cs" />
-    <Compile Include="AreaChildKernels.cs" />
-    <Compile Include="Mvc\AreaExtensions.cs" />
     <Compile Include="NinjectAreaRegistrationContextExtensions.cs" />
     <Compile Include="MvcAreaChildKernelModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

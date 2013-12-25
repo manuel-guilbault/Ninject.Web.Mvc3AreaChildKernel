@@ -6,30 +6,22 @@ namespace Ninject.Web.MvcAreaChildKernel.Mvc
 {
     public class AreaAwareFilterAttributeFilterProvider : FilterAttributeFilterProvider
     {
-        private readonly IAreaChildKernelCollection areaChildKernels;
-        private readonly IKernel kernel;
+        private readonly IKernelResolver kernelResolver;
 
-        public AreaAwareFilterAttributeFilterProvider(IAreaChildKernelCollection areaChildKernels, IKernel kernel)
+        public AreaAwareFilterAttributeFilterProvider(IKernelResolver kernelResolver)
         {
-            if (areaChildKernels == null) throw new ArgumentNullException("areaChildKernels");
-            if (kernel == null) throw new ArgumentNullException("kernel");
+            if (kernelResolver == null) throw new ArgumentNullException("kernelResolver");
 
-            this.areaChildKernels = areaChildKernels;
-            this.kernel = kernel;
-        }
-
-        protected IKernel ResolveChildKernel(ControllerContext controllerContext)
-        {
-            return areaChildKernels.ResolveChildKernel(kernel, controllerContext.Controller.GetType());
+            this.kernelResolver = kernelResolver;
         }
 
         protected override IEnumerable<FilterAttribute> GetControllerAttributes(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
         {
             var attributes = base.GetControllerAttributes(controllerContext, actionDescriptor);
-            var effectiveKernel = ResolveChildKernel(controllerContext);
+            var kernel = kernelResolver.Resolve(controllerContext.Controller.GetType());
             foreach (var attribute in attributes)
             {
-                effectiveKernel.Inject(attribute);
+                kernel.Inject(attribute);
             }
             return attributes;
         }
@@ -37,10 +29,10 @@ namespace Ninject.Web.MvcAreaChildKernel.Mvc
         protected override IEnumerable<FilterAttribute> GetActionAttributes(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
         {
             var attributes = base.GetActionAttributes(controllerContext, actionDescriptor);
-            var effectiveKernel = ResolveChildKernel(controllerContext);
+            var kernel = kernelResolver.Resolve(controllerContext.Controller.GetType());
             foreach (var attribute in attributes)
             {
-                effectiveKernel.Inject(attribute);
+                kernel.Inject(attribute);
             }
             return attributes;
         }
