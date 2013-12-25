@@ -29,11 +29,11 @@ namespace Ninject.Web.MvcAreaChildKernel
 
             areaNamespaceMapper.Register(
                 areaRegistrationContext.AreaName, 
-                areaRegistrationContext.Namespaces.Select(ns => ns.TrimEnd('.', '*')).ToArray()
+                areaRegistrationContext.Namespaces.ToArray()
             );
+
             kernel.Bind<IChildKernel>()
-                .ToMethod(c => childKernelFactory(c.Kernel))
-                .InSingletonScope()
+                .ToConstant(childKernelFactory(kernel))
                 .Named(areaRegistrationContext.AreaName);
         }
 
