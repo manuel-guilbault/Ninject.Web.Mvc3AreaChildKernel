@@ -7,10 +7,10 @@ namespace Ninject.Web.MvcAreaChildKernel
 {
     public class DefaultAreaNamespaceMapper : IAreaNamespaceMapper
     {
-        private readonly IAreaNamespaceMapCache cache;
-
         private readonly ISet<string> areaNames = new HashSet<string>();
         private readonly IDictionary<string, string> namespaceToAreaNameMap = new Dictionary<string, string>();
+
+        private readonly IAreaNamespaceMapCache cache;
 
         public DefaultAreaNamespaceMapper(IAreaNamespaceMapCache cache)
         {
@@ -19,7 +19,7 @@ namespace Ninject.Web.MvcAreaChildKernel
             this.cache = cache;
         }
 
-        private string ResolveNamespace(string @namespace)
+        protected virtual string ResolveNamespace(string @namespace)
         {
             string areaName;
 

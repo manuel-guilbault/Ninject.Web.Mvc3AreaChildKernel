@@ -9,47 +9,6 @@ namespace Ninject.Web.MvcAreaChildKernel
 {
     public class DefaultAreaNamespaceMapCache : IAreaNamespaceMapCache
     {
-        //private readonly ISet<string> ignoredNamespaces = new HashSet<string>();
-        //private readonly IDictionary<string, string> namespaceToAreaNameMap = new Dictionary<string, string>();
-
-        //public string Resolve(string @namespace)
-        //{
-        //    if (@namespace == null) throw new ArgumentNullException("namespace");
-
-        //    string areaName;
-        //    return namespaceToAreaNameMap.TryGetValue(@namespace, out areaName)
-        //        ? areaName
-        //        : null;
-        //}
-
-        //public void Map(string @namespace, string areaName)
-        //{
-        //    if (@namespace == null) throw new ArgumentNullException("namespace");
-        //    if (areaName == null) throw new ArgumentNullException("areaName");
-
-        //    namespaceToAreaNameMap.Add(@namespace, areaName);
-        //}
-
-        //public bool IsIgnored(string @namespace)
-        //{
-        //    if (@namespace == null) throw new ArgumentNullException("namespace");
-
-        //    return ignoredNamespaces.Contains(@namespace);
-        //}
-
-        //public void Ignore(string @namespace)
-        //{
-        //    if (@namespace == null) throw new ArgumentNullException("namespace");
-
-        //    ignoredNamespaces.Add(@namespace);
-        //}
-
-        //public void Clear()
-        //{
-        //    namespaceToAreaNameMap.Clear();
-        //    ignoredNamespaces.Clear();
-        //}
-
         private const string clearDependencyKey = "Ninject.Web.MvcAreaChildKernel.ClearTrigger";
         private readonly static object ignoreValue = new object();
 

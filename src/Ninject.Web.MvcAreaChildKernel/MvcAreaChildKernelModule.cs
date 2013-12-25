@@ -10,9 +10,8 @@ namespace Ninject.Web.MvcAreaChildKernel
         public override void Load()
         {
             Bind<IAreaNamespaceMapper>().To<DefaultAreaNamespaceMapper>().InSingletonScope();
+            Bind<IAreaNamespaceMapCache>().ToMethod(c => new DefaultAreaNamespaceMapCache(HttpContext.Current.Cache));
             Bind<IAreaChildKernelRegistrar, IKernelResolver>().To<DefaultAreaChildKernelRegistry>().InSingletonScope();
-            Bind<IAreaNamespaceMapCache>().To<DefaultAreaNamespaceMapCache>()
-                .WithConstructorArgument("cache", c => HttpContext.Current.Cache);
 
             BindMvcServices();
         }

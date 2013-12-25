@@ -37,11 +37,11 @@ namespace Ninject.Web.MvcAreaChildKernel
                 .Named(areaRegistrationContext.AreaName);
         }
 
-        public IKernel Resolve(Type type)
+        public IKernel Resolve(string @namespace)
         {
-            if (type == null) throw new ArgumentNullException("type");
+            if (@namespace == null) throw new ArgumentNullException("namespace");
 
-            var areaName = areaNamespaceMapper.Resolve(type.Namespace);
+            var areaName = areaNamespaceMapper.Resolve(@namespace);
             if (areaName == null)
             {
                 return kernel;

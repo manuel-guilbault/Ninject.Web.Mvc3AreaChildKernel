@@ -4,6 +4,10 @@ using System.Web.Routing;
 
 namespace Ninject.Web.MvcAreaChildKernel.Mvc
 {
+    /// <summary>
+    /// Controller activator that relies on a IKernelResolver to get the IKernel instance used
+    /// to create the controller.
+    /// </summary>
     public class AreaAwareControllerActivator : IControllerActivator
     {
         private readonly IKernelResolver kernelResolver;
@@ -19,7 +23,7 @@ namespace Ninject.Web.MvcAreaChildKernel.Mvc
         {
             if (controllerType == null) throw new ArgumentNullException("controllerType");
 
-            var kernel = kernelResolver.Resolve(controllerType);
+            var kernel = kernelResolver.Resolve(controllerType.Namespace);
             return (IController)kernel.Get(controllerType);
         }
     }

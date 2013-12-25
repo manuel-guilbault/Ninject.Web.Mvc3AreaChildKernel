@@ -3,10 +3,13 @@ using System;
 
 namespace Ninject.Web.MvcAreaChildKernel
 {
+    /// <summary>
+    /// A service that handles mapping between area names and namespaces.
+    /// </summary>
     public interface IAreaNamespaceMapper
     {
         /// <summary>
-        /// Register an area child kernel for a given set of namespaces.
+        /// Register a set of namespaces for an area name.
         /// </summary>
         /// <param name="areaName"></param>
         /// <param name="namespaces"></param>
@@ -15,7 +18,7 @@ namespace Ninject.Web.MvcAreaChildKernel
         void Register(string areaName, params string[] namespaces);
 
         /// <summary>
-        /// Resolve the area name matching a given namespace.
+        /// Resolve the area name for a given namespace.
         /// </summary>
         /// <param name="namespace"></param>
         /// <returns>The area name, or null if the namespace cannot be mapped to an area.</returns>

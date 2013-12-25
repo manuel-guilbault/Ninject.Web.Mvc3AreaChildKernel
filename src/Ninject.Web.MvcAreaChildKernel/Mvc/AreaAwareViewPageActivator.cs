@@ -3,6 +3,10 @@ using System.Web.Mvc;
 
 namespace Ninject.Web.MvcAreaChildKernel.Mvc
 {
+    /// <summary>
+    /// View page activator that relies on a IKernelResolver to get the IKernel instance used
+    /// to create the view page.
+    /// </summary>
     public class AreaAwareViewPageActivator : IViewPageActivator
     {
         private readonly IKernelResolver kernelResolver;
@@ -19,7 +23,7 @@ namespace Ninject.Web.MvcAreaChildKernel.Mvc
             if (controllerContext == null) throw new ArgumentNullException("controllerContext");
             if (type == null) throw new ArgumentNullException("type");
 
-            var kernel = kernelResolver.Resolve(controllerContext.Controller.GetType());
+            var kernel = kernelResolver.Resolve(controllerContext.Controller.GetType().Namespace);
             return kernel.Get(type);
         }
     }
