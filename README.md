@@ -9,7 +9,7 @@ How to
 Assuming you already have a MVC project named MyMvcApp with 
 
 * a reference on the [Ninject.Web.MvcAreaChildKernel](https://github.com/manuel-guilbault/Ninject.Web.MvcAreaChildKernel) extension and its dependencies
-  * [Ninject.MVC3](https://github.com/ninject/ninject.web.mvc)
+  * [Ninject.Web.Mvc](https://github.com/ninject/ninject.web.mvc)
   * [Ninject.Extensions.ChildKernel](https://github.com/ninject/ninject.extensions.childkernel)
 * an area named MyArea
 
@@ -59,3 +59,8 @@ Try it out!
 -----------
 
 You can download the source code or fork the repository to run the MvcSample application included in the solution.
+
+Contribute
+----------
+
+The next step will be to put in place a complete build script (probably based on Ninject's build script using Ant) to build this extension for all MVC versions and for all runtimes supported by Ninject. [Let me know](mailto:Manuel%20Guilbault<manuel.guilbault@gmail.com>?subject=Ninject.Web.MvcAreaChildKernel) if you can give a hand!
