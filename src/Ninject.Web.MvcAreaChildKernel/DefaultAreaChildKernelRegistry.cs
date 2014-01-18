@@ -10,8 +10,11 @@ namespace Ninject.Web.MvcAreaChildKernel
 {
     public class DefaultAreaChildKernelRegistry : IAreaChildKernelRegistrar, IKernelResolver
     {
+        private const string defaultNamePrefix = "Area:";
+
         private readonly IKernel kernel;
         private readonly IAreaNamespaceMapper areaNamespaceMapper;
+        private string namePrefix;
 
         public DefaultAreaChildKernelRegistry(IKernel kernel, IAreaNamespaceMapper areaNamespaceMapper)
         {
@@ -20,6 +23,29 @@ namespace Ninject.Web.MvcAreaChildKernel
 
             this.kernel = kernel;
             this.areaNamespaceMapper = areaNamespaceMapper;
+        }
+
+        public string NamePrefix
+        {
+            get
+            {
+                if (namePrefix == null)
+                {
+                    namePrefix = defaultNamePrefix;
+                }
+                return defaultNamePrefix;
+            }
+            set
+            {
+                if (value == null) throw new ArgumentNullException();
+
+                namePrefix = value;
+            }
+        }
+
+        protected virtual string GetChildKernelName(string areaName)
+        {
+            return NamePrefix + areaName;
         }
 
         public void Register(AreaRegistrationContext areaRegistrationContext, Func<IKernel, IChildKernel> childKernelFactory)
@@ -34,7 +60,7 @@ namespace Ninject.Web.MvcAreaChildKernel
 
             kernel.Bind<IChildKernel>()
                 .ToConstant(childKernelFactory(kernel))
-                .Named(areaRegistrationContext.AreaName);
+                .Named(GetChildKernelName(areaRegistrationContext.AreaName));
         }
 
         public IKernel Resolve(string @namespace)
@@ -47,7 +73,7 @@ namespace Ninject.Web.MvcAreaChildKernel
                 return kernel;
             }
 
-            var areaKernel = kernel.TryGet<IChildKernel>(areaName);
+            var areaKernel = kernel.TryGet<IChildKernel>(GetChildKernelName(areaName));
             return areaKernel ?? kernel;
         }
     }
