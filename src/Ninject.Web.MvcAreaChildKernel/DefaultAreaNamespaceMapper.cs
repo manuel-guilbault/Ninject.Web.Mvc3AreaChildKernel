@@ -10,17 +10,27 @@ namespace Ninject.Web.MvcAreaChildKernel
         private readonly ISet<string> areaNames = new HashSet<string>();
         private readonly IDictionary<string, string> namespaceToAreaNameMap = new Dictionary<string, string>();
 
-        private readonly IAreaNamespaceMapCache cache;
-
-        public DefaultAreaNamespaceMapper(IAreaNamespaceMapCache cache)
+        public void Register(string areaName, params string[] namespaces)
         {
-            if (cache == null) throw new ArgumentNullException("cache");
+            if (areaName == null) throw new ArgumentNullException("areaName");
+            if (areaNames.Contains(areaName)) throw new ArgumentException(string.Format("Area '{0}' already registered", areaName), "areaName");
+            if (namespaces == null) throw new ArgumentNullException("namespaces");
+            if (!namespaces.Any()) throw new ArgumentException("namespaces cannot be empty", "namespaces");
 
-            this.cache = cache;
+            var existingNamespace = namespaces.FirstOrDefault(ns => namespaceToAreaNameMap.ContainsKey(ns));
+            if (existingNamespace != null) throw new ArgumentException(string.Format("Area already registered for namespace '{0}'", existingNamespace), "namespaces");
+
+            areaNames.Add(areaName);
+            foreach (var @namespace in namespaces)
+            {
+                namespaceToAreaNameMap.Add(@namespace, areaName);
+            }
         }
 
-        protected virtual string ResolveNamespace(string @namespace)
+        public string Resolve(string @namespace)
         {
+            if (@namespace == null) throw new ArgumentNullException("namespace");
+
             string areaName;
 
             // Try to directly resolve the namespace.
@@ -40,51 +50,14 @@ namespace Ninject.Web.MvcAreaChildKernel
                 var pattern = string.Join(".", patternParts);
                 if (namespaceToAreaNameMap.TryGetValue(pattern, out areaName))
                 {
-                    cache.Map(@namespace, areaName);
                     return areaName;
                 }
 
                 --patternLength;
             }
-            
+
             // Cannot resolve the namespace.
             return null;
-        }
-
-        public void Register(string areaName, params string[] namespaces)
-        {
-            if (areaName == null) throw new ArgumentNullException("areaName");
-            if (areaNames.Contains(areaName)) throw new ArgumentException(string.Format("Area '{0}' already registered", areaName), "areaName");
-            if (namespaces == null) throw new ArgumentNullException("namespaces");
-            if (!namespaces.Any()) throw new ArgumentException("namespaces cannot be empty", "namespaces");
-
-            var existingNamespace = namespaces.FirstOrDefault(ns => namespaceToAreaNameMap.ContainsKey(ns));
-            if (existingNamespace != null) throw new ArgumentException(string.Format("Area already registered for namespace '{0}'", existingNamespace), "namespaces");
-
-            areaNames.Add(areaName);
-            foreach (var @namespace in namespaces)
-            {
-                namespaceToAreaNameMap.Add(@namespace, areaName);
-            }
-            cache.Clear();
-        }
-
-        public string Resolve(string @namespace)
-        {
-            if (@namespace == null) throw new ArgumentNullException("namespace");
-
-            if (cache.IsIgnored(@namespace))
-            {
-                return null;
-            }
-
-            var areaName = cache.Resolve(@namespace) ?? ResolveNamespace(@namespace);
-            if (areaName == null)
-            {
-                cache.Ignore(@namespace);
-            }
-
-            return areaName;
         }
     }
 }
