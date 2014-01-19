@@ -14,6 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D4B1A1
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2BD4B5BA-99D5-481A-B890-29F92C750B76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninject.Web.MvcAreaChildKernel.Test", "Ninject.Web.MvcAreaChildKernel.Test\Ninject.Web.MvcAreaChildKernel.Test.csproj", "{77AFB043-9F04-4238-BD42-EECD467581E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,8 +32,15 @@ Global
 		{9C26369D-C532-4289-A896-F105D0D137C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C26369D-C532-4289-A896-F105D0D137C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C26369D-C532-4289-A896-F105D0D137C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77AFB043-9F04-4238-BD42-EECD467581E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77AFB043-9F04-4238-BD42-EECD467581E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77AFB043-9F04-4238-BD42-EECD467581E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77AFB043-9F04-4238-BD42-EECD467581E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{77AFB043-9F04-4238-BD42-EECD467581E0} = {2BD4B5BA-99D5-481A-B890-29F92C750B76}
 	EndGlobalSection
 EndGlobal
