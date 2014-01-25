@@ -12,13 +12,15 @@ namespace Ninject.Web.MvcAreaChildKernel
     {
         public override void Load()
         {
-            Bind<IAreaChildKernelRegistrar, IKernelResolver>().To<DefaultAreaChildKernelRegistry>().InRequestScope();
-            Bind<IAreaNamespaceMapper>().To<CachingAreaNamespaceMapper>().InRequestScope();
+            Bind<IAreaChildKernelRegistrar, IKernelResolver>().To<DefaultAreaChildKernelRegistry>()
+                .InRequestScope();
+            Bind<IAreaNamespaceMapper>().To<CachingAreaNamespaceMapper>()
+                .InRequestScope();
             Bind<IAreaNamespaceMapper>().To<DefaultAreaNamespaceMapper>()
                 .WhenInjectedExactlyInto<CachingAreaNamespaceMapper>()
                 .InSingletonScope();
-            Bind<IAreaNamespaceMapCache>().To<DefaultAreaNamespaceMapCache>().InRequestScope();
-            Bind<Cache>().ToMethod(c => HttpContext.Current.Cache);
+            Bind<IAreaNamespaceMapCache>().ToConstructor(c => new DefaultAreaNamespaceMapCache(HttpRuntime.Cache))
+                .InRequestScope();
 
             BindMvcServices();
         }
