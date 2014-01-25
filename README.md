@@ -1,10 +1,17 @@
-Ninject.Web.MvcAreaChildKernel
+Ninject.Web.Mvc3AreaChildKernel
 ==============================
 
-Use child kernels with MVC areas.
+Use child kernels with MVC 3+ areas.
 
-How to
-------
+Why
+---
+
+In big MVC applications, it can get confusing to have all services registered in the same kernel. Even when using Ninject modules, all services are available to the whole application, which can lead to complicated conditional bindings, turning the composition root into a huge mess.
+
+By using child kernels for MVC areas, you can isolate the services available to a single area into a child kernel. And because child kernels will redirect resolution requests they cannot fullfil to their parent, you can still have all global services registered at the application level and visible to all areas.
+
+How
+---
 
 Assuming you already have a MVC project named MyMvcApp with 
 
@@ -59,8 +66,3 @@ Try it out!
 -----------
 
 You can download the source code or fork the repository to run the MvcSample application included in the solution.
-
-Contribute
-----------
-
-The next step will be to put in place a complete build script (probably based on Ninject's build script using Ant) to build this extension for all MVC versions and for all runtimes supported by Ninject. [Let me know](mailto:Manuel%20Guilbault<manuel.guilbault@gmail.com>?subject=Ninject.Web.MvcAreaChildKernel) if you can give a hand!
