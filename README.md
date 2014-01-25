@@ -1,4 +1,4 @@
-Ninject.Web.Mvc3AreaChildKernel
+Ninject.Web.MvcAreaChildKernel
 ==============================
 
 Use child kernels with MVC 3+ areas.
