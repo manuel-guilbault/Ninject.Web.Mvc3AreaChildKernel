@@ -28,6 +28,7 @@ namespace Ninject.Web.MvcAreaChildKernel.Test
             Assert.IsType<AreaAwareViewPageActivator>(kernel.Get<IViewPageActivator>());
 
             var filterProviders = kernel.GetAll<IFilterProvider>();
+            Assert.Equal(2, filterProviders.Count());
             Assert.Equal(filterProviders.Any(fp => fp is AreaAwareFilterProvider), true);
             Assert.Equal(filterProviders.Any(fp => fp is AreaAwareFilterAttributeFilterProvider), true);
         }
